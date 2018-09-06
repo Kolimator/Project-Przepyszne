@@ -1,0 +1,67 @@
+{
+  "restaurant": [
+    {
+      "id": 1,
+      "title": "Chinol",
+      "menu": [
+        {
+          "category": "Soup",
+          "price": "90",
+          "foodname": "Zupa",
+          "isveg": true
+        },
+        {
+          "category": "Dish",
+          "price": "90",
+          "foodname": "Ryż",
+          "isveg": true
+        },
+        {
+          "category": "Dish",
+          "price": "90",
+          "foodname": "Kurczak",
+          "isveg": true
+        }
+
+      ]
+    },
+
+    {
+      "id": 2,
+      "title": "Pizzeria",
+      "menu": [{
+        "category": "Pizza",
+        "price": "90",
+        "foodname": "Pizza 1",
+        "isveg": true
+      },
+        {
+          "category": "Pizza",
+          "price": "90",
+          "foodname": "Pizza 2",
+          "isveg": true
+        }]
+    },
+    {
+      "id": 3,
+      "title": "Sushi",
+      "menu": [{
+        "category": "Sushi",
+        "price": "90",
+        "foodname": "Maki",
+        "isveg": true
+      },
+        {
+          "category": "Sushi",
+          "price": "90",
+          "foodname": "Uramaki",
+          "isveg": true
+        }]
+    }
+
+
+
+
+  ]
+
+}
