@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import Restauracje from "./Restaurant"
 import Menu from "./Menu"
+import Podsumowanie from "./Over"
 
 
 
@@ -26,53 +27,62 @@ class Navigation extends Component{
 
 
 class Dostawa extends  Component{
-    render(){
-        return <div>
-            <h2>Sposób dostawy</h2>
-        </div>
-    }
-}
-
-class Podsumowanie extends Component{
     constructor(props){
         super(props)
-        this.state ={menuList: this.props.menuID }
-    }
-    componentDidUpdate(){
+            this.state = {opt : "Dowóz",
+        adress:null}
 
-        if (this.props.menuID !== this.state.menuList) {
-            this.setState({menuList : this.props.menuID})
+
+        };
+
+        handleTitleChange = (event) => {
+        this.setState({opt: event.target.value})
+    };
+
+        handleNamechange = (event)=>{
+            this.setState({adress: event.target.value});
+            this.props.userAdr(this.state.adress)
+
+
+        };
+    render(){
+        let Dowoz;
+        if(this.state.opt === "Dowóz"){
+            Dowoz = <div>
+                <form>
+                    <input type="text" placeholder="Podaj adres" value={this.state.adress} onChange={this.handleNamechange}/>
+                </form>
+            </div>
 
         }
 
-    }
-
-    render() {if(this.state.menuList != null){
-        return <div>
-            <h2>Podsumowanie</h2>
-            <ul>
-            {this.state.menuList.map(elem =>{
-                return <li value={elem.price}>{elem.foodname}</li>
-            })
-
-            }
-
-        </ul>
-            <div>
-            <h2>Cena</h2>
-                <span>{}</span>
+        let Odbior;
+        if(this.state.opt === "Odbiór"){
+            Odbior = <div>
+                <span>Jedzenie do odbioru za</span>
             </div>
+        }
+        return <div>
+            <h2 >Sposób dostawy</h2>
+             <form onSubmit={this.handleSubmit}>
+                 <select
+                    value={this.state.opt}
+                    onChange={this.handleTitleChange}>
+                    <option value="Dowóz">Dowóz</option>
+                    <option value="Odbiór">Odbiór</option>
+                </select>
+                 <div>{Dowoz}</div>
+                 <div>{Odbior}</div>
+
+            <input type="submit" value="Wybierz" />
+        </form>
+
+
         </div>
     }
-
-
-else{
-    return <li>Skomponuj zamówienie</li>
-    }
-
-    }
-
 }
+
+
 class NotFound extends Component{
     render(){
         return <div>Nie dziala</div>
@@ -83,7 +93,8 @@ class UserPanel extends Component {
     constructor(props){
         super(props);
         this.state =  {rest:null,
-            menu:null}
+            menu:null,
+            adres:null}
 
     }
 
@@ -94,6 +105,9 @@ class UserPanel extends Component {
     userChoose =(menuID)=>{
         this.setState({menu: menuID});
         console.log(this.state.menu)
+    };
+    userAdress = (userAdres) =>{
+        this.setState({adres:userAdres})
     };
 
 
@@ -106,11 +120,11 @@ class UserPanel extends Component {
             <Switch>
                 <Route exact path='/restauracje' render={() => <Restauracje checkRest = {this.userRest}/>}/>
                 <Route path='/menu' render={() => <Menu restID={this.state.rest} userChoose ={this.userChoose}/>} />
-                <Route path='/delivery' component={Dostawa} />
+                <Route path='/delivery' render={()=> <Dostawa userAdr={this.userAdress}  />} />
 
                 <Route path='*' component={NotFound} />
             </Switch>
-            <Podsumowanie menuID = {this.state.menu}>
+            <Podsumowanie menuID = {this.state.menu} adressInf={this.state.adres}>
 
 
             </Podsumowanie>
